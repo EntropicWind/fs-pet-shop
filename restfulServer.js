@@ -62,12 +62,16 @@ app.get('/pets/:id', (req, res) => {
 
 app.post("/pets", (req,res,next) => {
     const { age, name, kind } = req.body;
+    if(!age || !kind || !name) {
+        res.sendStatus(400)
+    }else{
     pool.query(
         `INSERT INTO pets (age, name, kind) VALUES ($1, $2, $3)RETURNING *;`,
         [age, name, kind]
         ).then((data) => {
             res.status(200).send(data.rows[0]);
         }).catch(next);
+    }
 });
 
     app.patch("/pets/:id", (req,res,next) => {

@@ -55,7 +55,8 @@ app.get('/pets/:id', (req, res) => {
         }else{
             res.sendStatus(404);
         }
-    });
+    })
+    .catch(next);
   });
 
 
@@ -98,7 +99,8 @@ app.delete("/pets/:id", (req,res) => {
         }else {
         res.send(204);
         }
-    });
+    })
+    .catch(next);
 });
 
 app.use((err, req, res, next) => {

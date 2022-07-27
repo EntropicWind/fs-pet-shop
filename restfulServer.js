@@ -40,7 +40,6 @@ const unknownHttp = ((req, res, next) => {
 app.get('/pets', (req,res,next) => {
     pool.query("SELECT * FROM pets").then((data) => {
           res.send(data.rows);
-          pool.end();
       })
       .catch(next)
   });
@@ -103,7 +102,8 @@ app.delete("/pets/:id", (req,res) => {
 });
 
 app.use((err, req, res, next) => {
-        res.sendStatus(500)
+        res.sendStatus(500);
+        pool.end();
 });
 
     // listen on a port
